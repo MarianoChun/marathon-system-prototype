@@ -33,6 +33,20 @@ body {
   background-color: #8BC4BF; 
 }
 
+h1 {
+  font-size: 39px;  
+  text-align: center; 
+  padding-bottom: 20px; 
+  color: #3E6263;
+}
+
+h3 {
+  text-align: center;
+  font-size: 16px; 
+  padding-bottom: 30px;
+  color: #0e0e0e;   
+}
+
 .form-inscripcion {  
   width: 100%;
   max-width: 600px;
@@ -70,8 +84,8 @@ body {
 }
 
 legend {
-    text-align: center;
-    font-size: 15px;
+  text-align: center;
+  font-size: 15px;
 }
 
 .label-sponsor{
@@ -104,7 +118,7 @@ legend {
   color: white;
 }
 
-span {
+.obligatorio {
   color: red; 
 }
 
@@ -117,20 +131,6 @@ span {
 .aviso {
   font-size: 13px;  
   color: #0e0e0e;  
-}
-
-h1 {
-  font-size: 39px;  
-  text-align: center; 
-  padding-bottom: 20px; 
-  color: #3E6263;
-}
-
-h3 {
-  text-align: center;
-  font-size: 16px; 
-  padding-bottom: 30px;
-  color: #0e0e0e;   
 }
 
 footer {
