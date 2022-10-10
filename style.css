@@ -1,0 +1,148 @@
+:root {
+  --tipo-principal: 'IBM Plex Sans', sans-serif;
+}
+
+.cabecera {
+  display: flex;
+  justify-content: center;
+  margin:10px auto;
+  background-color: #264d4f;
+  border-radius: 5px;
+}
+
+nav li {
+  display: inline-flex;
+}
+
+nav a {
+  color: #8BC4BF;
+  text-decoration: none;
+  font-size: 20px;
+  margin: 10px;
+  padding: 15px;
+}
+
+nav a:hover {
+  color:rgba(96, 125, 218, 0.658);
+  font-size: 20px;
+}
+
+body {
+  height: 100%; 
+  font-family: var(--tipo-principal);
+  background-color: #8BC4BF; 
+}
+
+.form-inscripcion {  
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;    
+  padding: 30px 20px;
+  background-color: #fbfbfb;
+}
+
+.campos {
+  display: flex;
+  justify-content: center;
+  background-color: #fbfbfb; 
+  width: 560px; 
+  height: 40px; 
+  border-radius: 5px;  
+  border-style: solid; 
+  border-width: 1px; 
+  border-color: #5C9092; 
+  margin-top: 10px;  
+  margin-bottom: 20px;
+}
+
+.sponsor {
+  margin-left: auto;
+  margin-right: auto; 
+  width: 60%;
+  border-color: #5C9092;
+  border-radius: 5px;  
+  border-style: solid; 
+}
+
+legend {
+    text-align: center;
+    font-size: 15px;
+}
+
+.label-sponsor{
+  display: block; 
+  float: center;  
+}
+
+.boton {
+  height: 45px; 
+  padding-left: 5px;
+  padding-right: 5px;  
+  margin: 20px auto; 
+  text-transform: uppercase;
+  background-color: #84CED1; 
+  border-color: #5C9092; 
+  border-style: solid; 
+  border-radius: 10px;  
+  width: 560px;   
+  cursor: pointer;
+  transition: 0.5s all;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.boton:hover{
+  background: #264d4f;
+  transform: scale(1.02);
+  color: white;
+}
+
+span {
+  color: red; 
+}
+
+.aviso-importante{
+  text-align: center;
+  color: rgb(88, 110, 157);
+  font-size: 12px;
+}
+
+.aviso {
+  font-size: 13px;  
+  color: #0e0e0e;  
+}
+
+h1 {
+  font-size: 39px;  
+  text-align: center; 
+  padding-bottom: 20px; 
+  color: #3E6263;
+}
+
+h3 {
+  text-align: center;
+  font-size: 16px; 
+  padding-bottom: 30px;
+  color: #0e0e0e;   
+}
+
+footer {
+  text-align: center;
+}
+
+::-webkit-input-placeholder {
+  color: #a8a8a8;
+}
+
+.formulario input:focus{
+  outline:0;
+  border: 1px solid #97d848;
+}
+
