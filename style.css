@@ -94,6 +94,10 @@ legend {
   float: center;  
 }
 
+#datos-sponsor-propio, #nombre-sponsor:disabled, #descripcion:disabled {
+  background-color:grey;
+}
+
 .boton {
   height: 45px; 
   padding-left: 5px;
