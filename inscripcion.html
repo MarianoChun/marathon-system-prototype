@@ -53,7 +53,11 @@
           <span class="obligatorio">*</span>
         </label>
         <input class="campos" type="email" name="introducir_email" id="email" required="obligatorio" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" placeholder="Escribe tu Email. Ej.:usuario@dominio.com">
-                
+
+        <p class="aviso-importante">IMPORTANTE:<br>Si elige "Sponsor propio" debe pagar un monto para inscribirse.
+          <br>Si quiere inscribirse de forma gratuita, elija "Sponsor general".
+        </p>
+
         <fieldset class="sponsor">
           <legend>Elija con que tipo de sponsor desea correr<span class="obligatorio">*</span></legend>
                 
@@ -62,9 +66,17 @@
             <label for="sponsor-general" class="label-sponsor"><input type="radio" name="sponsor" id="sponsor-general" required="obligatorio">Sponsor general</label>
           </fieldset>
 
-          <p class="aviso-importante">IMPORTANTE:<br>Si elige "Sponsor propio" debe pagar un monto para inscribirse.
-              <br>Si quiere inscribirse de forma gratuita, elija "Sponsor general".
-          </p>
+          <div id="datos-sponsor-propio">
+              <label for="nombre-sponsor">Nombre Sponsor
+                <span class="obligatorio">*</span>
+              </label>
+              <input class="campos" type="text" id="nombre-sponsor" required="obligatorio" disabled = "false" placeholder="Escribe el nombre del sponsor">
+    
+              <label for="descripcion">Nombre
+                <span class="obligatorio">*</span>
+              </label>
+              <input class="campos" type="text" id="descripcion" required="obligatorio" disabled = "false" placeholder="Escribe una descripción">
+          </div>
 
           <input class="boton" type="submit" value="Enviar" onclick="validarFormulario()"></input>
 
