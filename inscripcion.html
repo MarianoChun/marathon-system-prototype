@@ -42,17 +42,17 @@
         <label for="dni">DNI
           <span class="obligatorio">*</span>
         </label>  
-        <input class="campos" type="text" name="introducir_dni" id="dni" required="obligatorio" placeholder="Escribe tu DNI. Ej.:123456789" pattern="\d+">
+        <input class="campos" type="number" name="introducir_dni" id="dni" required="obligatorio" minlength="7" maxlength="8" placeholder="Escribe tu DNI. Ej.:123456789" pattern="\d+">
 
         <label for="edad">Edad
           <span class="obligatorio">*</span>
         </label>
-        <input class="campos" type="number" min="0" max="120" id="edad" required="obligatorio" placeholder="Escribe tu edad">
+        <input class="campos" type="number" min="6" max="120" id="edad" required="obligatorio" placeholder="Escribe tu edad">
         
         <label for="email">Email
           <span class="obligatorio">*</span>
         </label>
-        <input class="campos" type="email" name="introducir_email" id="email" required="obligatorio" placeholder="Escribe tu Email. Ej.:usuario@dominio.com">
+        <input class="campos" type="email" name="introducir_email" id="email" required="obligatorio" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Escribe tu Email. Ej.:usuario@dominio.com">
                 
         <fieldset class="sponsor">
           <legend>Elija con que tipo de sponsor desea correr<span class="obligatorio">*</span></legend>
