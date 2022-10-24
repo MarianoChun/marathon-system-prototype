@@ -2,6 +2,24 @@
   --tipo-principal: 'IBM Plex Sans', sans-serif;
 }
 
+#map { 
+  height: 500px; 
+
+}
+
+.botones-mapa {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+}
+
+.btn-mapa{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 .cabecera {
   display: flex;
   justify-content: center;
