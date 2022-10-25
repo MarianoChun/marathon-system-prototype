@@ -27,12 +27,42 @@ function deshabilitarInput(idElementoInput){
     input.style.backgroundColor="rgb(187, 185, 185)";
 }
 
+function sortearSponsorGratuito(){
+    let sponsorsGratuitos = [
+        {
+            "nombre": "Nakidas",
+        },
+        {
+            "nombre": "MCBurguer",
+        },
+        {
+            "nombre": "BuzzCola",
+        }
+        ];
+
+    var randomIndex = Math.floor(Math.random() * 3);
+
+    var nombreSponsor = sponsorsGratuitos[randomIndex].nombre;
+
+    return nombreSponsor;
+}
+
 function enviarFormulario(evento){
     evento.preventDefault(); 
+    let tieneSponsorGratuito = document.getElementById("sponsor-general").checked;
     var confirmarEnvio = confirm("¿Esta seguro?");
+    let sponsor;
+
 
     if(confirmarEnvio){
-        alert("¡Felicitaciones se ha inscripto satisfactoriamente!");
+        if(tieneSponsorGratuito){
+            sponsor = sortearSponsorGratuito();
+
+        } else {
+            sponsor = document.getElementById("nombre-sponsor").value;
+        }
+        let mensaje = "¡Felicitaciones se ha inscripto satisfactoriamente! Con el sponsor " + sponsor;
+        alert(mensaje);
         this.submit();
     }
 }
