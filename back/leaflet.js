@@ -1,4 +1,5 @@
 var capaCentros = L.layerGroup([]);
+var capaCorredores = L.layerGroup([]);
 var mapa = L.map('map').setView([-34.52, -58.70], 13);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -6,17 +7,23 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(mapa);
 
+document.addEventListener("DOMContentLoaded", function() {
+    dibujarMapaCorredores(postas);
+});
+
 
 document.getElementById("btn-mapa-centrosSalud").addEventListener("click", function () {
     dibujarMapaCentrosSalud(centrosSalud);
 });
 
 document.getElementById("btn-mapa-corredores").addEventListener("click", function () {
-    dibujarMapaCorredores();
+    dibujarMapaCorredores(postas);
 });
 
 
 function dibujarMapaCentrosSalud(centrosSalud) {
+    limpiarLayers()
+
     centrosSalud.forEach(centro => {
         var marker = L.marker([centro.coordenadas.x, centro.coordenadas.y]).addTo(mapa);
         marker.bindPopup("<b>" + centro.nombre + "</b>" + "<br>" + centro.direccion).openPopup();
@@ -26,7 +33,20 @@ function dibujarMapaCentrosSalud(centrosSalud) {
     capaCentros.addTo(mapa);
 }
 
-function dibujarMapaCorredores() {
+function dibujarMapaCorredores(postas) {
+    limpiarLayers()
+
+    postas.forEach(posta => {
+        var marker = L.marker([posta.coordenadas.x, posta.coordenadas.y]).addTo(mapa);
+        marker.bindPopup("<b>" + posta.id + "</b>").openPopup();
+        capaCorredores.addLayer(marker);
+    });
+
+    capaCorredores.addTo(mapa);
+}
+
+function limpiarLayers(){
     capaCentros.clearLayers();
+    capaCorredores.clearLayers();
 }
 
