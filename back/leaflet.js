@@ -19,7 +19,7 @@ document.getElementById("btn-mapa-corredores").addEventListener("click", functio
 function dibujarMapaCentrosSalud(centrosSalud) {
     centrosSalud.forEach(centro => {
         var marker = L.marker([centro.coordenadas.x, centro.coordenadas.y]).addTo(mapa);
-        marker.bindPopup("<b>" + centro.nombre + "</b>").openPopup();
+        marker.bindPopup("<b>" + centro.nombre + "</b>" + "<br>" + centro.direccion).openPopup();
         capaCentros.addLayer(marker);
     });
 
