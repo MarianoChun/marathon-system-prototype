@@ -37,7 +37,16 @@ function dibujarMapaCorredores(postas) {
     limpiarLayers()
 
     postas.forEach(posta => {
-        var marker = L.marker([posta.coordenadas.x, posta.coordenadas.y]).addTo(mapa);
+        var greenIcon = new L.Icon({
+            iconUrl: '../imgs/marker-verde.png',
+            shadowUrl: '../imgs/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+          });
+          
+        var marker = L.marker([posta.coordenadas.x, posta.coordenadas.y], {icon: greenIcon}).addTo(mapa);
         marker.bindPopup("<b>" + posta.id + "</b>").openPopup();
         capaCorredores.addLayer(marker);
     });
