@@ -3,28 +3,31 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 document.getElementById("sponsor-propio").addEventListener('click', function(){
-    habilitarInput("nombre-sponsor");
-    habilitarInput("descripcion");
+    mostrarInputSponsorPropio();
 });
 
 document.getElementById("sponsor-general").addEventListener('click', function(){
-    deshabilitarInput("nombre-sponsor");
-    deshabilitarInput("descripcion");
+    ocultarInputSponsorPropio();
 });
 
+function mostrarInputSponsorPropio(){
+    var nombre = document.getElementById("nombre-sponsor");
+    var descripcion = document.getElementById("descripcion");
+    nombre.disabled = false;
+    descripcion.disabled = false;
 
-function habilitarInput(idElementoInput){
-    var input = document.getElementById(idElementoInput);
-    
-    input.disabled = false;
-    input.style.backgroundColor="white";
+    var seccionSponsorPropio = document.getElementsByClassName("visibilidad");
+    seccionSponsorPropio[0].style.display="block";
 }
 
-function deshabilitarInput(idElementoInput){
-    var input = document.getElementById(idElementoInput);
-    
-    input.disabled = true;
-    input.style.backgroundColor="rgb(187, 185, 185)";
+function ocultarInputSponsorPropio(){
+    var nombre = document.getElementById("nombre-sponsor");
+    var descripcion = document.getElementById("descripcion");
+    nombre.disabled = true;
+    descripcion.disabled = true;
+
+    var seccionSponsorPropio = document.getElementsByClassName("visibilidad");
+    seccionSponsorPropio[0].style.display="none";
 }
 
 function sortearSponsorGratuito(){

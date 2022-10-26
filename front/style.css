@@ -119,8 +119,8 @@ legend {
   margin: 10px;
 }
 
-#nombre-sponsor:disabled, #descripcion:disabled {
-  background-color:rgb(187, 185, 185);
+.visibilidad {
+  display: none;
 }
 
 .boton {
