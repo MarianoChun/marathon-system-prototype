@@ -88,3 +88,19 @@ let postas = [
         }
     },   
 ]
+
+var obtenerCoordenadasPostas = function obtenerCoordenadasPostas(){
+    let coordeandas = [];
+    
+    for(let i = 0; i < postas.length; i++){
+        let coordenadaActual = [];
+        let coordeandasPostaActual = postas[i].coordenadas;
+
+        coordenadaActual.push(coordeandasPostaActual.x);
+        coordenadaActual.push(coordeandasPostaActual.y);
+        
+        coordeandas.push(coordenadaActual);
+    }
+
+    return coordeandas;
+}
