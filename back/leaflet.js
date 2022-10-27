@@ -1,6 +1,6 @@
 var capaCentros = L.layerGroup([]);
 var capaCorredores = L.layerGroup([]);
-var mapa = L.map('map').setView([-34.52, -58.70], 13);
+var mapa = L.map('map').setView([-34.52, -58.70], 15);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -15,11 +15,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
 document.getElementById("btn-mapa-centrosSalud").addEventListener("click", function () {
     dibujarMapaCentrosSalud(centrosSalud);
+    cambiarATablaCentrosDeSalud()
 });
 
 document.getElementById("btn-mapa-corredores").addEventListener("click", function () {
     dibujarMapaCorredores(getTrackById(42));
+    cambiarATablaCorredores()
 });
+
+function cambiarATablaCorredores(){
+    document.getElementById("encabezado-lista").innerHTML = "Corredores";
+}
+
+function cambiarATablaCentrosDeSalud(){
+    document.getElementById("encabezado-lista").innerHTML = "Centros de salud";
+}
 
 
 function dibujarMapaCentrosSalud(centrosSalud) {

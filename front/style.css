@@ -2,9 +2,25 @@
   --tipo-principal: 'IBM Plex Sans', sans-serif;
 }
 
-#map { 
-  height: 500px; 
+#container-mapa-lista {
+  display: flex;
+  width: 100%;
+}
 
+#container-mapa {
+  height: 600px;
+  width: 80%;
+}
+#map { 
+  height: 100%; 
+  width: 100%;
+}
+
+#lista {
+  position: relative;
+  width: 20%;
+  float: right;
+  background-color: white;
 }
 
 .botones-mapa {
