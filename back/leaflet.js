@@ -8,8 +8,8 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(mapa);
 
 document.addEventListener("DOMContentLoaded", function() {
-    dibujarMapaCorredores(postas);
-    dibujarCircuitoMaraton(postas)
+    dibujarMapaCorredores(getTrackById(42));
+    dibujarCircuitoMaraton(getTrackById(42))
 });
 
 
@@ -34,8 +34,12 @@ function dibujarMapaCentrosSalud(centrosSalud) {
     capaCentros.addTo(mapa);
 }
 
-function dibujarPostas(postas) {
-    postas.forEach(posta => {
+function dibujarPostas(track) {
+    
+    coordenadasPostasTrack = obtenerCoordenadasPostasTrack(track["id"]);
+    let descripcionPosta = "Posta ";
+    coordenadasPostasTrack.forEach(coordenada => {
+        let indiceCoordenada = coordenadasPostasTrack.indexOf(coordenada);
         var greenIcon = new L.Icon({
             iconUrl: '../imgs/marker-verde.png',
             shadowUrl: '../imgs/marker-shadow.png',
@@ -45,22 +49,22 @@ function dibujarPostas(postas) {
             shadowSize: [41, 41]
           });
           
-        var marker = L.marker([posta.coordenadas.x, posta.coordenadas.y], {icon: greenIcon}).addTo(mapa);
-        marker.bindPopup("<b>" + posta.id + "</b>").openPopup();
+        var marker = L.marker([coordenada[0], coordenada[1]], {icon: greenIcon}).addTo(mapa);
+        marker.bindPopup("<b>" + descripcionPosta + indiceCoordenada + "</b>").openPopup();
         capaCorredores.addLayer(marker);
     });
 }
-function dibujarMapaCorredores() {
+function dibujarMapaCorredores(track) {
     limpiarLayers()
 
-    dibujarPostas(postas)
-    dibujarCircuitoMaraton(postas)
+    dibujarPostas(track)
+    dibujarCircuitoMaraton(track)
 
     capaCorredores.addTo(mapa);
 }
 
-function dibujarCircuitoMaraton(postas) {
-    let coordenadasPostas = obtenerCoordenadasPostas();
+function dibujarCircuitoMaraton(track) {
+    let coordenadasPostas = obtenerCoordenadasPostasTrack(track["id"]);
 
     var polyline = new L.Polyline(coordenadasPostas, {
         color: 'blue',
