@@ -81,9 +81,10 @@ h3 {
   color: #0e0e0e;   
 }
 
-#encabezado-fotos {
+#encabezado-fotos, #encabezado-mapa {
   text-align: center;
 }
+
 .form-inscripcion {  
   width: 100%;
   max-width: 600px;
