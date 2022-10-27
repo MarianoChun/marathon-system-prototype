@@ -8,14 +8,38 @@ function getTracks(){
     return JSON.parse(xhttp.responseText);
 }
 
-function getTrackById(id){
+function getTrackById(idTrack){
     let xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "https://fasterthanall.herokuapp.com/api/tracks/" + id,false);
+    xhttp.open("GET", "https://fasterthanall.herokuapp.com/api/tracks/" + idTrack,false);
     xhttp.send();
     //console.log(JSON.parse(xhttp.responseText));
     return JSON.parse(xhttp.responseText)['track'];
 }
+function getCamarasTrackById(idTrack){
+    let xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "https://fasterthanall.herokuapp.com/api/webcams/" + idTrack,false);
+    xhttp.send();
+    //console.log(JSON.parse(xhttp.responseText));
+    return JSON.parse(xhttp.responseText)['webcams'];
+}
 
+function obtenerCoordenadasCamarasTrack(idTrack) {
+    let camarasTrack = getCamarasTrackById(idTrack);
+    
+    let coordenadas = [];
+    
+    for(let i = 0; i < camarasTrack.length; i++){
+        let coordenadaActual = [];
+        let coordenadaCamaraActual = camarasTrack[i]["coordinate"];
+        
+        coordenadaActual.push(coordenadaCamaraActual["lat"]);
+        coordenadaActual.push(coordenadaCamaraActual["lon"]);
+        
+        coordenadas.push(coordenadaActual);
+    }
+    //console.log(coordenadas);
+    return coordenadas;
+}
 function obtenerCoordenadasPostasTrack(idTrack){
     let coordenadasTrack = getTrackById(idTrack)['coordinates'];
     //console.log(coordenadasTrack);

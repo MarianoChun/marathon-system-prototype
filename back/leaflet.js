@@ -35,16 +35,15 @@ function dibujarMapaCentrosSalud(centrosSalud) {
 }
 
 function dibujarPostas(track) {
-    
-    coordenadasPostasTrack = obtenerCoordenadasPostasTrack(track["id"]);
+    let coordenadasPostasTrack = obtenerCoordenadasPostasTrack(track["id"]);
     let descripcionPosta = "Posta ";
     coordenadasPostasTrack.forEach(coordenada => {
         let indiceCoordenada = coordenadasPostasTrack.indexOf(coordenada);
         var greenIcon = new L.Icon({
-            iconUrl: '../imgs/marker-verde.png',
+            iconUrl: '../imgs/posta-roja.png',
             shadowUrl: '../imgs/marker-shadow.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
+            iconSize: [15, 20],
+            iconAnchor: [10, 30],
             popupAnchor: [1, -34],
             shadowSize: [41, 41]
           });
@@ -54,11 +53,33 @@ function dibujarPostas(track) {
         capaCorredores.addLayer(marker);
     });
 }
+
+function dibujarCamaras(track) {
+    let coordenadasCamarasTrack = obtenerCoordenadasCamarasTrack(track["id"]);
+    let descripcionCamara = "Id camara: ";
+    coordenadasCamarasTrack.forEach(coordenada => {
+        let indiceCoordenada = coordenadasCamarasTrack.indexOf(coordenada);
+        var greenIcon = new L.Icon({
+            iconUrl: '../imgs/camara.png',
+            shadowUrl: '../imgs/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+          });
+          
+        var marker = L.marker([coordenada[0], coordenada[1]], {icon: greenIcon}).addTo(mapa);
+        marker.bindPopup("<b>" + descripcionCamara + indiceCoordenada + "</b>").openPopup();
+        capaCorredores.addLayer(marker);
+    });
+}
+
 function dibujarMapaCorredores(track) {
     limpiarLayers()
 
-    dibujarPostas(track)
-    dibujarCircuitoMaraton(track)
+    dibujarPostas(track);
+    dibujarCircuitoMaraton(track);
+    dibujarCamaras(track);
 
     capaCorredores.addTo(mapa);
 }
