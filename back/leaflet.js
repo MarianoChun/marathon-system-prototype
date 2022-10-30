@@ -1,5 +1,6 @@
 var capaCentros = L.layerGroup([]);
 var capaCorredores = L.layerGroup([]);
+var capaPosicionCorredor = L.layerGroup([]);
 var mapa = L.map('map').setView([-34.52, -58.70], 15);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -9,7 +10,8 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 document.addEventListener("DOMContentLoaded", function() {
     dibujarMapaCorredores(getTrackById(42));
-    dibujarCircuitoMaraton(getTrackById(42))
+    dibujarCircuitoMaraton(getTrackById(42));
+    simularCarreraCorredor(7);
 });
 
 
@@ -62,6 +64,42 @@ function dibujarPostas(track) {
         marker.bindPopup("<b>" + descripcionPosta + indiceCoordenada + "</b>").openPopup();
         capaCorredores.addLayer(marker);
     });
+}
+
+async function simularCarreraCorredor(idCorredor){
+    let checkpointsCorredor = obtenerCoordenadasCheckpoints(42, idCorredor);
+
+    for(let i = 0; i < checkpointsCorredor.length; i++){
+        let coordenada = checkpointsCorredor[i];
+        console.log(coordenada);
+        await timeout(2000)
+        .then(dibujarCorredor(idCorredor, coordenada))
+        .then(timeout(2000))
+        .then(borrarCorredores);
+    }
+
+}
+
+function timeout(ms) {
+    return new Promise(resolve => {
+        setTimeout(resolve, ms);
+    });
+}
+
+function borrarCorredores(){
+    capaPosicionCorredor.clearLayers();
+}
+
+function dibujarCorredor(idCorredor, coordenadaCorredor){
+    let corredor = getCorredorPorId(idCorredor)['runner'];
+    console.log(corredor);
+    var marker = L.marker([coordenadaCorredor[0], coordenadaCorredor[1]]).addTo(mapa);
+
+    marker.bindPopup("<b>" + corredor['name'] + " " +corredor['surname'] + "</b> <br> " +
+    corredor['sponsor']['name']).openPopup();
+
+    capaPosicionCorredor.addLayer(marker);
+    capaPosicionCorredor.addTo(mapa);
 }
 
 function dibujarCamaras(track) {

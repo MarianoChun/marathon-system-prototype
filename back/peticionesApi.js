@@ -23,6 +23,40 @@ function getCamarasTrackById(idTrack){
     return JSON.parse(xhttp.responseText)['webcams'];
 }
 
+function getCheckpointsRunnerById(idTrack, idRunner){
+    let xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "https://fasterthanall.herokuapp.com/api/replays/" + idTrack + "/runner/" + idRunner,false);
+    xhttp.send();
+    //console.log(JSON.parse(xhttp.responseText)['positions']['checkpoints']);
+    
+    return JSON.parse(xhttp.responseText)['positions']['checkpoints'];
+}
+
+function getCorredorPorId(idRunner){
+    let xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "https://fasterthanall.herokuapp.com/api/tracks/" + 42 + "/runners/" + idRunner,false);
+    xhttp.send();
+    
+    return JSON.parse(xhttp.responseText);
+}
+
+function obtenerCoordenadasCheckpoints(idTrack, idRunner) {
+    let checkpointsRunner = getCheckpointsRunnerById(idTrack, idRunner);
+    let coordenadas = [];
+    
+    for(let i = 0; i < checkpointsRunner.length; i++){
+        let coordenadaActual = [];
+        let coordenadaCamaraActual = checkpointsRunner[i]["coordinate"];
+        
+        coordenadaActual.push(coordenadaCamaraActual["lat"]);
+        coordenadaActual.push(coordenadaCamaraActual["lon"]);
+        
+        coordenadas.push(coordenadaActual);
+    }
+    //console.log(coordenadas);
+    return coordenadas;
+}
+
 function obtenerCoordenadasCamarasTrack(idTrack) {
     let camarasTrack = getCamarasTrackById(idTrack);
     
