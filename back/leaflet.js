@@ -67,7 +67,7 @@ function dibujarPostas(track) {
 }
 
 async function simularCarreraCorredor(idCorredor){
-    let checkpointsCorredor = obtenerCoordenadasCheckpoints(42, idCorredor);
+    let checkpointsCorredor = obtenerCoordenadasCheckpoints(idCorredor);
 
     for(let i = 0; i < checkpointsCorredor.length; i++){
         let coordenada = checkpointsCorredor[i];
@@ -102,8 +102,8 @@ function dibujarCorredor(idCorredor, coordenadaCorredor){
     capaPosicionCorredor.addTo(mapa);
 }
 
-function dibujarCamaras(track) {
-    let coordenadasCamarasTrack = obtenerCoordenadasCamarasTrack(track["id"]);
+function dibujarCamaras() {
+    let coordenadasCamarasTrack = obtenerCoordenadasCamarasTrack();
     let descripcionCamara = "Id camara: ";
     coordenadasCamarasTrack.forEach(coordenada => {
         let indiceCoordenada = coordenadasCamarasTrack.indexOf(coordenada);
@@ -133,7 +133,7 @@ function dibujarMapaCorredores(track) {
 }
 
 function dibujarCircuitoMaraton(track) {
-    let coordenadasPostas = obtenerCoordenadasPostasTrack(track["id"]);
+    let coordenadasPostas = obtenerCoordenadasPostasTrack();
 
     var polyline = new L.Polyline(coordenadasPostas, {
         color: 'blue',

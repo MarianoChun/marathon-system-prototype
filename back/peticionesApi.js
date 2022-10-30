@@ -1,4 +1,4 @@
-
+var idTrack = 42;
 
 function getTracks(){
     let xhttp = new XMLHttpRequest();
@@ -15,7 +15,7 @@ function getTrackById(idTrack){
     //console.log(JSON.parse(xhttp.responseText));
     return JSON.parse(xhttp.responseText)['track'];
 }
-function getCamarasTrackById(idTrack){
+function getCamarasTrack(){
     let xhttp = new XMLHttpRequest();
     xhttp.open("GET", "https://fasterthanall.herokuapp.com/api/webcams/" + idTrack,false);
     xhttp.send();
@@ -23,7 +23,7 @@ function getCamarasTrackById(idTrack){
     return JSON.parse(xhttp.responseText)['webcams'];
 }
 
-function getCheckpointsRunnerById(idTrack, idRunner){
+function getCheckpointsRunnerById(idRunner){
     let xhttp = new XMLHttpRequest();
     xhttp.open("GET", "https://fasterthanall.herokuapp.com/api/replays/" + idTrack + "/runner/" + idRunner,false);
     xhttp.send();
@@ -34,14 +34,14 @@ function getCheckpointsRunnerById(idTrack, idRunner){
 
 function getCorredorPorId(idRunner){
     let xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "https://fasterthanall.herokuapp.com/api/tracks/" + 42 + "/runners/" + idRunner,false);
+    xhttp.open("GET", "https://fasterthanall.herokuapp.com/api/tracks/" + idTrack + "/runners/" + idRunner,false);
     xhttp.send();
     
     return JSON.parse(xhttp.responseText);
 }
 
-function obtenerCoordenadasCheckpoints(idTrack, idRunner) {
-    let checkpointsRunner = getCheckpointsRunnerById(idTrack, idRunner);
+function obtenerCoordenadasCheckpoints(idRunner) {
+    let checkpointsRunner = getCheckpointsRunnerById(idRunner);
     let coordenadas = [];
     
     for(let i = 0; i < checkpointsRunner.length; i++){
@@ -57,8 +57,8 @@ function obtenerCoordenadasCheckpoints(idTrack, idRunner) {
     return coordenadas;
 }
 
-function obtenerCoordenadasCamarasTrack(idTrack) {
-    let camarasTrack = getCamarasTrackById(idTrack);
+function obtenerCoordenadasCamarasTrack() {
+    let camarasTrack = getCamarasTrack(idTrack);
     
     let coordenadas = [];
     
@@ -74,7 +74,7 @@ function obtenerCoordenadasCamarasTrack(idTrack) {
     //console.log(coordenadas);
     return coordenadas;
 }
-function obtenerCoordenadasPostasTrack(idTrack){
+function obtenerCoordenadasPostasTrack(){
     let coordenadasTrack = getTrackById(idTrack)['coordinates'];
     //console.log(coordenadasTrack);
     let coordenadas = [];
