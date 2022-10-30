@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function() {
     dibujarMapaCorredores(getTrackById(42));
     dibujarCircuitoMaraton(getTrackById(42));
     cargarCorredoresATabla();
-    simularCarreraCorredor(7);
 });
 
 
@@ -28,6 +27,28 @@ document.getElementById("btn-mapa-corredores").addEventListener("click", functio
     cambiarATablaCorredores();
 });
 
+document.getElementById('div-lista').addEventListener("click", function() {
+    var ul = document.getElementById('div-lista');
+    ul.onclick = function(event) {
+    var target = getEventTarget(event);
+    let idCorredor = extraerIdItemLista(target);
+
+    simularCarreraCorredor(idCorredor);
+    };
+});
+
+
+function getEventTarget(e) {
+    e = e || window.event;
+    return e.target || e.srcElement; 
+}
+
+function extraerIdItemLista(item){
+    var regExp = /\(([^)]+)\)/;
+    let id = item.innerHTML.split(regExp);
+  
+    return id[1];
+}
 function cambiarATablaCorredores(){
     document.getElementById("encabezado-lista").innerHTML = "Corredores";
     cargarCorredoresATabla()
@@ -48,7 +69,7 @@ function cargarCorredoresATabla(){
         let listItem = document.createElement("li");
         let botonCorredor = document.createElement("button");
 
-        botonCorredor.textContent = corredor['name'] + " " + corredor['surname'] + " | " + corredor['sponsor']['name'];
+        botonCorredor.textContent = "("+ corredor['id'] +") " +corredor['name'] + " " + corredor['surname'] + " | " + corredor['sponsor']['name'];
         listItem.appendChild(botonCorredor);
         lista.appendChild(listItem);
     }   
