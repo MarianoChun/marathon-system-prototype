@@ -40,6 +40,14 @@ function getCorredorPorId(idRunner){
     return JSON.parse(xhttp.responseText);
 }
 
+function getCorredores(){
+    let xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "https://fasterthanall.herokuapp.com/api/tracks/" + idTrack +"/runners/",false);
+    xhttp.send();
+    
+    return JSON.parse(xhttp.responseText)['runners'];
+}
+
 function obtenerCoordenadasCheckpoints(idRunner) {
     let checkpointsRunner = getCheckpointsRunnerById(idRunner);
     let coordenadas = [];

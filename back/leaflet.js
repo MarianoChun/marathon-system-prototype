@@ -11,29 +11,68 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 document.addEventListener("DOMContentLoaded", function() {
     dibujarMapaCorredores(getTrackById(42));
     dibujarCircuitoMaraton(getTrackById(42));
+    cargarCorredoresATabla();
     simularCarreraCorredor(7);
 });
 
 
 document.getElementById("btn-mapa-centrosSalud").addEventListener("click", function () {
     dibujarMapaCentrosSalud(centrosSalud);
+    limpiarTabla();
     cambiarATablaCentrosDeSalud()
 });
 
 document.getElementById("btn-mapa-corredores").addEventListener("click", function () {
     dibujarMapaCorredores(getTrackById(42));
-    cambiarATablaCorredores()
+    limpiarTabla();
+    cambiarATablaCorredores();
 });
 
 function cambiarATablaCorredores(){
     document.getElementById("encabezado-lista").innerHTML = "Corredores";
+    cargarCorredoresATabla()
 }
 
 function cambiarATablaCentrosDeSalud(){
     document.getElementById("encabezado-lista").innerHTML = "Centros de salud";
+    cargarCentrosSaludATabla();
 }
 
 
+function cargarCorredoresATabla(){
+
+    let lista = document.getElementById("ul-lista");
+    
+    for(let corredor of getCorredores()){
+        
+        let listItem = document.createElement("li");
+        let botonCorredor = document.createElement("button");
+
+        botonCorredor.textContent = corredor['name'] + " " + corredor['surname'] + " | " + corredor['sponsor']['name'];
+        listItem.appendChild(botonCorredor);
+        lista.appendChild(listItem);
+    }   
+}
+
+function cargarCentrosSaludATabla(){
+
+    let lista = document.getElementById("ul-lista");
+    
+    for(let centro of centrosSalud){
+        
+        let listItem = document.createElement("li");
+        let botonCorredor = document.createElement("button");
+
+        botonCorredor.textContent = centro['nombre'];
+        listItem.appendChild(botonCorredor);
+        lista.appendChild(listItem);
+    }   
+}
+
+function limpiarTabla(){
+    document.getElementById("ul-lista").innerHTML = "";
+    
+}
 function dibujarMapaCentrosSalud(centrosSalud) {
     limpiarLayers()
 
