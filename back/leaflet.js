@@ -121,7 +121,7 @@ function dibujarPostas(track) {
           });
           
         var marker = L.marker([coordenada[0], coordenada[1]], {icon: greenIcon}).addTo(mapa);
-        marker.bindPopup("<b>" + descripcionPosta + indiceCoordenada + "</b>").openPopup();
+        marker.bindPopup("<b>" + descripcionPosta + indiceCoordenada + "</b>");
         capaCorredores.addLayer(marker);
     });
 }
@@ -177,7 +177,7 @@ function dibujarCamaras() {
           });
           
         var marker = L.marker([coordenada[0], coordenada[1]], {icon: greenIcon}).addTo(mapa);
-        marker.bindPopup("<b>" + descripcionCamara + indiceCoordenada + "</b>").openPopup();
+        marker.bindPopup("<b>" + descripcionCamara + indiceCoordenada + "</b>");
         capaCorredores.addLayer(marker);
     });
 }
