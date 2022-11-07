@@ -1,6 +1,7 @@
 var capaCentros = L.layerGroup([]);
 var capaCorredores = L.layerGroup([]);
 var capaPosicionCorredor = L.layerGroup([]);
+var markerCentrosSalud = new Map();
 var mapa = L.map('map').setView([-34.52, -58.70], 15);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -27,16 +28,25 @@ document.getElementById("btn-mapa-corredores").addEventListener("click", functio
     cambiarATablaCorredores();
 });
 
-document.getElementById('div-lista').addEventListener("click", function() {
+document.getElementById('div-lista').addEventListener("click", function () {
     var ul = document.getElementById('div-lista');
-    ul.onclick = function(event) {
-    var target = getEventTarget(event);
-    let idCorredor = extraerIdItemLista(target);
-
-    simularCarreraCorredor(idCorredor);
-    };
+    
+    if (esListaCorredores()) {     
+        ul.onclick = function (event) {
+            var target = getEventTarget(event);
+            let idCorredor = extraerIdItemLista(target);
+            simularCarreraCorredor(idCorredor);
+        }
+    } else {
+        ul.onclick = function (event) {
+            var target = getEventTarget(event);
+            let centroSalud = obtenerCentroSaludPorNombre(target.textContent);
+            let coordenadasCentroSalud = centroSalud['coordenadas'];
+            markerCentrosSalud.get(centroSalud.nombre).openPopup();
+            mapa.flyTo(new L.LatLng(coordenadasCentroSalud['x'], coordenadasCentroSalud['y']));
+        }
+    }
 });
-
 
 function getEventTarget(e) {
     e = e || window.event;
@@ -49,6 +59,11 @@ function extraerIdItemLista(item){
   
     return id[1];
 }
+
+function obtenerCentroSaludPorNombre(nombre){
+    return centrosSalud.filter(centro => centro['nombre'] === nombre)[0];
+}
+
 function cambiarATablaCorredores(){
     document.getElementById("encabezado-lista").innerHTML = "Corredores";
     cargarCorredoresATabla()
@@ -59,6 +74,9 @@ function cambiarATablaCentrosDeSalud(){
     cargarCentrosSaludATabla();
 }
 
+function esListaCorredores() {
+    return  document.getElementById("encabezado-lista").textContent === "Corredores";
+}
 
 function cargarCorredoresATabla(){
 
@@ -99,7 +117,9 @@ function dibujarMapaCentrosSalud(centrosSalud) {
 
     centrosSalud.forEach(centro => {
         var marker = L.marker([centro.coordenadas.x, centro.coordenadas.y]).addTo(mapa);
-        marker.bindPopup("<b>" + centro.nombre + "</b>" + "<br>" + centro.direccion).openPopup();
+        marker.bindPopup("<b>" + centro.nombre + "</b>" + "<br>" + centro.direccion);
+
+        markerCentrosSalud.set(centro.nombre, marker);
         capaCentros.addLayer(marker);
     });
 
