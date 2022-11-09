@@ -37,13 +37,13 @@
         <label for="nombre">Nombre
           <span class="obligatorio">*</span>
         </label>
-        <input class="campos" type="text" name="introducir_nombre" id="nombre" required="obligatorio"
+        <input class="campos" type="text" pattern="^[a-zA-Z]+$" name="introducir_nombre" id="nombre" required="obligatorio"
           placeholder="Escribe tu nombre">
 
         <label for="apellido">Apellido
           <span class="obligatorio">*</span>
         </label>
-        <input class="campos" type="text" name="introducir_apellido" id="apellido" required="obligatorio"
+        <input class="campos" type="text" pattern="^[a-zA-Z]+$" name="introducir_apellido" id="apellido" required="obligatorio"
           placeholder="Escribe tu apellido">
 
         <label for="dni">DNI
