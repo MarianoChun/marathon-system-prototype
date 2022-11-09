@@ -1,6 +1,7 @@
 var capaCentros = L.layerGroup([]);
 var capaCorredores = L.layerGroup([]);
-var capaPosicionCorredor = L.layerGroup([]);
+var capaPosicionCorredores = L.layerGroup([]);
+var markersPosicionCorredores = new Map();
 var markerCentrosSalud = new Map();
 var mapa = L.map('map').setView([-34.52, -58.70], 15);
 
@@ -152,8 +153,9 @@ async function simularCarreraCorredor(idCorredor){
         console.log(coordenada);
         await timeout(2000)
         .then(dibujarCorredor(idCorredor, coordenada))
-        .then(timeout(2000))
-        .then(borrarCorredores);
+        .then(timeout(2000));
+        
+        borrarCorredor(idCorredor);
     }
 
 }
@@ -164,20 +166,23 @@ function timeout(ms) {
     });
 }
 
-function borrarCorredores(){
-    capaPosicionCorredor.clearLayers();
+function borrarCorredor(idCorredor){
+    capaPosicionCorredores.removeLayer(markersPosicionCorredores.get(idCorredor));
 }
 
 function dibujarCorredor(idCorredor, coordenadaCorredor){
     let corredor = getCorredorPorId(idCorredor)['runner'];
-    console.log(corredor);
-    var marker = L.marker([coordenadaCorredor[0], coordenadaCorredor[1]]).addTo(mapa);
 
+    console.log(corredor);
+    let marker = L.marker([coordenadaCorredor[0], coordenadaCorredor[1]]).addTo(mapa);
     marker.bindPopup("<b>" + corredor['name'] + " " +corredor['surname'] + "</b> <br> " +
     corredor['sponsor']['name']).openPopup();
 
-    capaPosicionCorredor.addLayer(marker);
-    capaPosicionCorredor.addTo(mapa);
+
+    capaPosicionCorredores.addLayer(marker);
+    capaPosicionCorredores.addTo(mapa);
+
+    markersPosicionCorredores.set(idCorredor, marker);
 }
 
 function dibujarCamaras() {
