@@ -28,23 +28,21 @@ document.getElementById("btn-mapa-corredores").addEventListener("click", functio
     cambiarATablaCorredores();
 });
 
-document.getElementById('div-lista').addEventListener("click", function () {
-    var ul = document.getElementById('div-lista');
-    
-    if (esListaCorredores()) {     
-        ul.onclick = function (event) {
-            var target = getEventTarget(event);
-            let idCorredor = extraerIdItemLista(target);
-            simularCarreraCorredor(idCorredor);
-        }
+document.getElementById('ul-lista').addEventListener("click", function (event) {
+    var target = getEventTarget(event);
+
+    if (esListaCorredores()) {
+
+        let idCorredor = extraerIdItemLista(target);
+        simularCarreraCorredor(idCorredor);
+
     } else {
-        ul.onclick = function (event) {
-            var target = getEventTarget(event);
-            let centroSalud = obtenerCentroSaludPorNombre(target.textContent);
-            let coordenadasCentroSalud = centroSalud['coordenadas'];
-            markerCentrosSalud.get(centroSalud.nombre).openPopup();
-            mapa.flyTo(new L.LatLng(coordenadasCentroSalud['x'], coordenadasCentroSalud['y']));
-        }
+
+        let centroSalud = obtenerCentroSaludPorNombre(target.textContent);
+        let coordenadasCentroSalud = centroSalud['coordenadas'];
+
+        markerCentrosSalud.get(centroSalud.nombre).openPopup();
+        mapa.flyTo(new L.LatLng(coordenadasCentroSalud['x'], coordenadasCentroSalud['y']));
     }
 });
 
