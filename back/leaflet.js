@@ -3,12 +3,20 @@ var capaCorredores = L.layerGroup([]);
 var capaPosicionCorredores = L.layerGroup([]);
 var markersPosicionCorredores = new Map();
 var markerCentrosSalud = new Map();
-var mapa = L.map('map').setView([-34.52, -58.70], 15);
+var mapaCorredores = L.map('mapaCorredores').setView([-34.52, -58.70], 15);
+var mapaCentrosSalud = L.map('mapaCentrosSalud').setView([-34.52, -58.70], 15);
+var timeouts = [];
 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+var tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(mapa);
+}).addTo(mapaCorredores);
+
+var tileLayer2 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(mapaCentrosSalud);
+
 
 document.addEventListener("DOMContentLoaded", function() {
     dibujarMapaCorredores(getTrackById(42));
@@ -18,21 +26,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 document.getElementById("btn-mapa-centrosSalud").addEventListener("click", function () {
-    dibujarMapaCentrosSalud(centrosSalud);
-    limpiarTabla();
+    habilitarMapaCentrosSalud();
     cambiarATablaCentrosDeSalud()
 });
 
 document.getElementById("btn-mapa-corredores").addEventListener("click", function () {
-    dibujarMapaCorredores(getTrackById(42));
-    limpiarTabla();
+    habilitarMapaCorredores();
     cambiarATablaCorredores();
 });
 
 document.getElementById('ul-lista').addEventListener("click", function (event) {
     var target = getEventTarget(event);
 
-    if (esListaCorredores()) {
+    if (esMapaCorredores()) {
 
         let idCorredor = extraerIdItemLista(target);
         simularCarreraCorredor(idCorredor);
@@ -43,9 +49,22 @@ document.getElementById('ul-lista').addEventListener("click", function (event) {
         let coordenadasCentroSalud = centroSalud['coordenadas'];
 
         markerCentrosSalud.get(centroSalud.nombre).openPopup();
-        mapa.flyTo(new L.LatLng(coordenadasCentroSalud['x'], coordenadasCentroSalud['y']));
+        mapaCentrosSalud.flyTo(new L.LatLng(coordenadasCentroSalud['x'], coordenadasCentroSalud['y']));
     }
 });
+
+function habilitarMapaCorredores() {
+    document.getElementById("mapaCorredores").style.display = 'block';
+    document.getElementById("mapaCentrosSalud").style.display = 'none';
+    dibujarMapaCorredores(getTrackById(42));
+}
+
+function habilitarMapaCentrosSalud() {
+    document.getElementById("mapaCentrosSalud").style.display = 'block';
+    document.getElementById("mapaCorredores").style.display = 'none';
+    mapaCentrosSalud.invalidateSize();
+    dibujarMapaCentrosSalud(centrosSalud);
+}
 
 function getEventTarget(e) {
     e = e || window.event;
@@ -64,16 +83,18 @@ function obtenerCentroSaludPorNombre(nombre){
 }
 
 function cambiarATablaCorredores(){
+    limpiarTabla();
     document.getElementById("encabezado-lista").innerHTML = "Corredores";
     cargarCorredoresATabla()
 }
 
 function cambiarATablaCentrosDeSalud(){
+    limpiarTabla();
     document.getElementById("encabezado-lista").innerHTML = "Centros de salud";
     cargarCentrosSaludATabla();
 }
 
-function esListaCorredores() {
+function esMapaCorredores() {
     return  document.getElementById("encabezado-lista").textContent === "Corredores";
 }
 
@@ -115,14 +136,14 @@ function dibujarMapaCentrosSalud(centrosSalud) {
     limpiarLayers()
 
     centrosSalud.forEach(centro => {
-        var marker = L.marker([centro.coordenadas.x, centro.coordenadas.y]).addTo(mapa);
+        var marker = L.marker([centro.coordenadas.x, centro.coordenadas.y]).addTo(mapaCentrosSalud);
         marker.bindPopup("<b>" + centro.nombre + "</b>" + "<br>" + centro.direccion);
 
         markerCentrosSalud.set(centro.nombre, marker);
         capaCentros.addLayer(marker);
     });
 
-    capaCentros.addTo(mapa);
+    capaCentros.addTo(mapaCentrosSalud);
 }
 
 function dibujarPostas(track) {
@@ -139,7 +160,7 @@ function dibujarPostas(track) {
             shadowSize: [41, 41]
           });
           
-        var marker = L.marker([coordenada[0], coordenada[1]], {icon: greenIcon}).addTo(mapa);
+        var marker = L.marker([coordenada[0], coordenada[1]], {icon: greenIcon}).addTo(mapaCorredores);
         marker.bindPopup("<b>" + descripcionPosta + indiceCoordenada + "</b>");
         capaCorredores.addLayer(marker);
     });
@@ -149,8 +170,15 @@ async function simularCarreraCorredor(idCorredor){
     let checkpointsCorredor = obtenerCoordenadasCheckpoints(idCorredor);
 
     for(let i = 0; i < checkpointsCorredor.length; i++){
+        if(!esMapaCorredores()){
+            clearAllTimeouts();
+            borrarCorredores();
+            break;
+        }
+
         let coordenada = checkpointsCorredor[i];
         console.log(coordenada);
+
         await timeout(2000)
         .then(dibujarCorredor(idCorredor, coordenada))
         .then(timeout(2000));
@@ -160,9 +188,14 @@ async function simularCarreraCorredor(idCorredor){
 
 }
 
+function clearAllTimeouts(){
+    for(let i = 0; i < timeouts.length; i++){
+        clearTimeout(timeouts[i]);
+    }
+}
 function timeout(ms) {
     return new Promise(resolve => {
-        setTimeout(resolve, ms);
+        timeouts.push(setTimeout(resolve, ms));
     });
 }
 
@@ -170,17 +203,22 @@ function borrarCorredor(idCorredor){
     capaPosicionCorredores.removeLayer(markersPosicionCorredores.get(idCorredor));
 }
 
+function borrarCorredores(){
+    capaPosicionCorredores.clearLayers();
+    markersPosicionCorredores.clear();
+}
+
 function dibujarCorredor(idCorredor, coordenadaCorredor){
     let corredor = getCorredorPorId(idCorredor)['runner'];
 
     console.log(corredor);
-    let marker = L.marker([coordenadaCorredor[0], coordenadaCorredor[1]]).addTo(mapa);
+    let marker = L.marker([coordenadaCorredor[0], coordenadaCorredor[1]]).addTo(mapaCorredores);
     marker.bindPopup("<b>" + corredor['name'] + " " +corredor['surname'] + "</b> <br> " +
     corredor['sponsor']['name']).openPopup();
 
 
     capaPosicionCorredores.addLayer(marker);
-    capaPosicionCorredores.addTo(mapa);
+    capaPosicionCorredores.addTo(mapaCorredores);
 
     markersPosicionCorredores.set(idCorredor, marker);
 }
@@ -199,7 +237,7 @@ function dibujarCamaras() {
             shadowSize: [41, 41]
           });
           
-        var marker = L.marker([coordenada[0], coordenada[1]], {icon: greenIcon}).addTo(mapa);
+        var marker = L.marker([coordenada[0], coordenada[1]], {icon: greenIcon}).addTo(mapaCorredores);
         marker.bindPopup("<b>" + descripcionCamara + indiceCoordenada + "</b>");
         capaCorredores.addLayer(marker);
     });
@@ -212,7 +250,7 @@ function dibujarMapaCorredores(track) {
     dibujarCircuitoMaraton(track);
     dibujarCamaras(track);
 
-    capaCorredores.addTo(mapa);
+    capaCorredores.addTo(mapaCorredores);
 }
 
 function dibujarCircuitoMaraton(track) {
@@ -225,7 +263,7 @@ function dibujarCircuitoMaraton(track) {
         smoothFactor: 1
     });
 
-    polyline.addTo(mapa);
+    polyline.addTo(mapaCorredores);
     capaCorredores.addLayer(polyline);
 }
 
