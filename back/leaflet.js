@@ -182,9 +182,9 @@ async function simularCarreraCorredor(idCorredor){
         let coordenada = checkpointsCorredor[i];
         console.log(coordenada);
 
-        await timeout(2000)
+        await timeout(5000)
         .then(dibujarCorredor(idCorredor, coordenada))
-        .then(timeout(2000));
+        .then(timeout(5000));
         
         borrarCorredor(idCorredor);
     }
