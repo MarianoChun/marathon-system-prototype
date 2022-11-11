@@ -1,5 +1,5 @@
 window.onload = function() {
-    $('#cargando').fadeOut();
+    $('#cargando').fadeOut(2000);
 }
 
 
