@@ -1,17 +1,7 @@
 window.onload = function() {
-    $('#cargando').fadeOut(1000);
-    $('body').removeClass('ocultar-preloader');
+    $('#cargando').fadeOut();
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    onloadPage();
-});
 
-function onloadPage() {
-    window.onload = function() {
-        $('#cargando').fadeOut(2000);
-        $('body').removeClass('ocultar-preloader');
-    }
-}
 
 
