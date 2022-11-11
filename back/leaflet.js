@@ -215,9 +215,18 @@ function dibujarCorredor(idCorredor, coordenadaCorredor){
     let corredor = getCorredorPorId(idCorredor)['runner'];
 
     console.log(corredor);
-    let marker = L.marker([coordenadaCorredor[0], coordenadaCorredor[1]]).addTo(mapaCorredores);
-    marker.bindPopup("<b>" + corredor['name'] + " " +corredor['surname'] + "</b> <br> " +
-    corredor['sponsor']['name']).openPopup();
+    var corredorIcon = new L.Icon({
+        iconUrl: '../imgs/person-running.png',
+        shadowUrl: '../imgs/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+
+    let marker = L.marker([coordenadaCorredor[0], coordenadaCorredor[1]], {icon: corredorIcon}).addTo(mapaCorredores);
+    let nombreCorredor = "<b>" + corredor['name'] + " " + corredor['surname'] + "</b>";
+    marker.bindPopup(nombreCorredor + "<br>" + corredor['sponsor']['name']).openPopup();
 
 
     capaPosicionCorredores.addLayer(marker);
@@ -238,7 +247,7 @@ function dibujarCamaras() {
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
             shadowSize: [41, 41]
-          });
+        });
           
         var marker = L.marker([coordenada[0], coordenada[1]], {icon: greenIcon}).addTo(mapaCorredores);
         marker.bindPopup("<b>" + descripcionCamara + indiceCoordenada + "</b>");
