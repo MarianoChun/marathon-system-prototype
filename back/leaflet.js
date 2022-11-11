@@ -3,8 +3,8 @@ var capaCorredores = L.layerGroup([]);
 var capaPosicionCorredores = L.layerGroup([]);
 var markersPosicionCorredores = new Map();
 var markerCentrosSalud = new Map();
-var mapaCorredores = L.map('mapaCorredores').setView([-34.52, -58.70], 15);
-var mapaCentrosSalud = L.map('mapaCentrosSalud').setView([-34.52, -58.70], 15);
+var mapaCorredores = L.map('mapaCorredores').setView([-34.52, -58.70], 16);
+var mapaCentrosSalud = L.map('mapaCentrosSalud').setView([-34.53480157854912, -58.72033547055928], 13);
 var timeouts = [];
 
 var tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
