@@ -67,5 +67,6 @@ function enviarFormulario(evento){
         let mensaje = "¡Felicitaciones se ha inscripto satisfactoriamente! Con el sponsor " + sponsor;
         alert(mensaje);
         this.submit();
+        window.location.href = "index.html";
     }
 }
