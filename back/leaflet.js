@@ -107,6 +107,7 @@ function cargarCorredoresATabla(){
         
         let listItem = document.createElement("li");
         let botonCorredor = document.createElement("button");
+        botonCorredor.className = "boton-lista";
 
         botonCorredor.textContent = "("+ corredor['id'] +") " +corredor['name'] + " " + corredor['surname'] + " | " + corredor['sponsor']['name'];
         listItem.appendChild(botonCorredor);
@@ -121,10 +122,12 @@ function cargarCentrosSaludATabla(){
     for(let centro of centrosSalud){
         
         let listItem = document.createElement("li");
-        let botonCorredor = document.createElement("button");
+        let botonCentro = document.createElement("button");
 
-        botonCorredor.textContent = centro['nombre'];
-        listItem.appendChild(botonCorredor);
+        botonCentro.textContent = centro['nombre'];
+        botonCentro.className = "boton-lista";
+
+        listItem.appendChild(botonCentro);
         lista.appendChild(listItem);
     }   
 }
