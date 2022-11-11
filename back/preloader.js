@@ -4,7 +4,6 @@ window.onload = function() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("finscripcion").addEventListener('submit', enviarFormulario);
     onloadPage();
 });
 

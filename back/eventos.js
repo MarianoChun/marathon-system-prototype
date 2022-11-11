@@ -10,6 +10,10 @@ document.getElementById("sponsor-general").addEventListener('click', function(){
     ocultarInputSponsorPropio();
 });
 
+document.getElementById("boton-enviar-formulario").click(function(event){
+    enviarFormulario(event);
+});
+
 function mostrarInputSponsorPropio(){
     var nombre = document.getElementById("nombre-sponsor");
     var descripcion = document.getElementById("descripcion");

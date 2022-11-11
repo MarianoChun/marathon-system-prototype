@@ -31,6 +31,7 @@ document.getElementById("btn-mapa-centrosSalud").addEventListener("click", funct
 });
 
 document.getElementById("btn-mapa-corredores").addEventListener("click", function () {
+    onloadPage();
     habilitarMapaCorredores();
     cambiarATablaCorredores();
 });
