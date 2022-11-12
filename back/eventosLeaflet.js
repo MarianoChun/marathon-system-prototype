@@ -40,6 +40,7 @@ document.getElementById('ul-lista').addEventListener("click", function (event) {
     if (esMapaCorredores()) {
 
         let idCorredor = extraerIdItemLista(target);
+        
         if(!estaSimulandoCarreraCorredor(idCorredor)){
             simularCarreraCorredor(idCorredor);
         }
@@ -47,10 +48,14 @@ document.getElementById('ul-lista').addEventListener("click", function (event) {
     } else {
 
         let centroSalud = obtenerCentroSaludPorNombre(target.textContent);
-        let coordenadasCentroSalud = centroSalud['coordenadas'];
 
-        markerCentrosSalud.get(centroSalud.nombre).openPopup();
-        mapaCentrosSalud.flyTo(new L.LatLng(coordenadasCentroSalud['x'], coordenadasCentroSalud['y']));
+        if (centroSalud != undefined) {
+            let coordenadasCentroSalud = centroSalud['coordenadas'];
+
+            markerCentrosSalud.get(centroSalud.nombre).openPopup();
+            mapaCentrosSalud.flyTo(new L.LatLng(coordenadasCentroSalud['x'], coordenadasCentroSalud['y']));
+        }
+
     }
 });
 
