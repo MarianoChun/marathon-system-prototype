@@ -202,7 +202,7 @@ function estaSimulandoCarreraCorredor(idCorredor){
 }
 
 async function simularCarreraCorredor(idCorredor){
-    let checkpointsCorredor = obtenerCoordenadasCheckpoints(idCorredor);
+    let checkpointsCorredor = getCheckpointsRunnerById(idCorredor);
 
     for(let i = 0; i < checkpointsCorredor.length; i++){
         if(!esMapaCorredores()){
@@ -210,12 +210,10 @@ async function simularCarreraCorredor(idCorredor){
             borrarCorredores();
             break;
         }
-
-        let coordenada = checkpointsCorredor[i];
-        console.log(coordenada);
+        let checkpointActual = checkpointsCorredor[i];
 
         await timeout(5000)
-        .then(dibujarCorredor(idCorredor, coordenada))
+        .then(dibujarCorredor(idCorredor, checkpointActual))
         .then(timeout(5000));
         
         borrarCorredor(idCorredor);
@@ -240,10 +238,12 @@ function timeout(ms) {
     });
 }
 
-function dibujarCorredor(idCorredor, coordenadaCorredor){
+function dibujarCorredor(idCorredor, checkpointActual){
     let corredor = getCorredorPorId(idCorredor)['runner'];
+    let coordenada = checkpointActual['coordinate'];
+    let dateFormat = new Date(checkpointActual['timeStamp']);
+    let tiempoOficial = dateFormat.getHours() + ":" + dateFormat.getMinutes() + ":" + dateFormat.getSeconds();
 
-    console.log(corredor);
     var corredorIcon = new L.Icon({
         iconUrl: '../imgs/person-running.png',
         shadowUrl: '../imgs/marker-shadow.png',
@@ -253,9 +253,9 @@ function dibujarCorredor(idCorredor, coordenadaCorredor){
         shadowSize: [41, 41]
     });
 
-    let marker = L.marker([coordenadaCorredor[0], coordenadaCorredor[1]], {icon: corredorIcon}).addTo(mapaCorredores);
+    let marker = L.marker([coordenada['lat'], coordenada['lon']], {icon: corredorIcon}).addTo(mapaCorredores);
     let nombreCorredor = "<b>" + corredor['name'] + " " + corredor['surname'] + "</b>";
-    marker.bindPopup(nombreCorredor + "<br>" + corredor['sponsor']['name']).openPopup();
+    marker.bindPopup(nombreCorredor + "<br>" + corredor['sponsor']['name'] + "<br>" + tiempoOficial).openPopup();
 
 
     capaPosicionCorredores.addLayer(marker);
@@ -266,6 +266,7 @@ function dibujarCorredor(idCorredor, coordenadaCorredor){
 
 function borrarCorredor(idCorredor){
     capaPosicionCorredores.removeLayer(markersPosicionCorredores.get(idCorredor));
+    markersPosicionCorredores.delete(idCorredor);
 }
 
 function obtenerCentroSaludPorNombre(nombre){
