@@ -1,5 +1,6 @@
 window.onload = function() {
-    $('#cargando').fadeOut(2000);
+    $('#cargando').fadeOut();
+    $('body').removeClass('ocultar-preloader');
 }
 
 
